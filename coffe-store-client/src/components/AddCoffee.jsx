@@ -1,44 +1,112 @@
 export default function AddCoffee() {
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const form = e.target;
+    const name = form.name.value;
+    const quantity = form.quantity.value;
+    const category = form.category.value;
+    const details = form.details.value;
+    const supplier = form.supplier.value;
+    const taste = form.taste.value;
+    const photoUrl = form.photoUrl.value;
+    const newCoffee ={name,quantity,category,details,supplier,taste,photoUrl}
+    console.log(newCoffee)
+  };
   return (
-    <div className="bg-[#F4F3F0] p-24 mx-auto">
-      <h2 className="text-3xl font-bold mb-4">Add Coffe</h2>
-      <form >
-            <div className="flex  flex-col gap-2">
-                <div className="join">
-                    
-                <input
-                    className="input input-bordered join-item md:w-1/3"
-                    placeholder="Enter coffee name"
-                />
-                <button className="btn join-item rounded-r-full">Add</button>
-                </div>
-
-                <div className="join">
-                <input
-                    className="input input-bordered join-item md:w-1/3"
-                    placeholder="Enter coffee supplier"
-                />
-                <button className="btn join-item rounded-r-full">Add</button>
-                </div>
-
-                <div className="join">
-                <input
-                    className="input input-bordered join-item md:w-1/3"
-                    placeholder="Enter coffee category"
-                />
-                <button className="btn join-item rounded-r-full">Add</button>
-                </div>
-
-                <div className="join">
-                <input
-                    className="input input-bordered join-item md:w-1/3"
-                    placeholder="Enter photo URL"
-                />
-                <button className="btn join-item rounded-r-full">Add</button>
-                 </div>
+    <div className="bg-[#F4F3F0] p-24  ">
+      <h2 className="text-3xl font-bold mb-4 text-center">Add COFFEE</h2>
+      <form onSubmit={handleSubmit} className="md:p-6 ">
+        {/* form row  coffee name, Available Quantity */}
+        <div className="md:flex gap-6  ">
+          <label className="form-control md:w-full ">
+            <div className="">
+              <span className="label-text font-bold">Name</span>
             </div>
+            <input
+              name="name"
+              type="text"
+              placeholder="Enter coffee name"
+              className="input input-bordered w-full "
+            />
+          </label>
+          <label className="form-control md:w-full  ">
+            <div className="">
+              <span className="label-text font-bold">Available Quantity</span>
+            </div>
+            <input
+              name="quantity"
+              type="text"
+              placeholder="Available Quantity"
+              className="input input-bordered w-full "
+            />
+          </label>
+        </div>
+        {/* form row Category, Details*/}
+        <div className="md:flex gap-6">
+          <label className="form-control md:w-full ">
+            <div className="">
+              <span className="label-text font-bold">Category</span>
+            </div>
+            <input
+              name="category"
+              type="text"
+              placeholder="Enter Category"
+              className="input input-bordered w-full "
+            />
+          </label>
+          <label className="form-control md:w-full ">
+            <div className="">
+              <span className="label-text font-bold">Details</span>
+            </div>
+            <input
+              name="details"
+              type="text"
+              placeholder="Details"
+              className="input input-bordered w-full "
+            />
+          </label>
+        </div>
+        {/* form row  Supplier, Taste */}
+        <div className="md:flex gap-6">
+          <label className="form-control md:w-full ">
+            <div className="">
+              <span className="label-text font-bold">Supplier</span>
+            </div>
+            <input
+              name="supplier"
+              type="text"
+              placeholder="Supplier"
+              className="input input-bordered w-full "
+            />
+          </label>
+          <label className="form-control md:w-full ">
+            <div className="">
+              <span className="label-text font-bold">Taste</span>
+            </div>
+            <input
+              name="taste"
+              type="text"
+              placeholder="Available Quantity"
+              className="input input-bordered w-full "
+            />
+          </label>
+        </div>
+        {/* form row photo URL*/}
+        <div className="flex mb-4">
+          <label className="form-control w-full">
+            <div className="">
+              <span className="label-text font-bold">Photo URL</span>
+            </div>
+            <input
+              name="photoUrl"
+              type="text"
+              placeholder="Photo URL"
+              className="input input-bordered w-full "
+            />
+          </label>
+        </div>
+        <button className="btn  btn-success w-full">Submite</button>
       </form>
-    
     </div>
   );
 }
