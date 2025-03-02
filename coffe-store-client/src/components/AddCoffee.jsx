@@ -1,3 +1,6 @@
+import { data } from "react-router-dom";
+import Swal from 'sweetalert2'
+
 export default function AddCoffee() {
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -9,13 +12,44 @@ export default function AddCoffee() {
     const supplier = form.supplier.value;
     const taste = form.taste.value;
     const photoUrl = form.photoUrl.value;
-    const newCoffee ={name,quantity,category,details,supplier,taste,photoUrl}
-    console.log(newCoffee)
+    const newCoffee = {
+      name,
+      quantity,
+      category,
+      details,
+      supplier,
+      taste,
+      photoUrl,
+    };
+    console.log(newCoffee);
+
+    //send data to server
+    fetch("http://localhost:5000/coffee", {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+      },
+      body: JSON.stringify(newCoffee),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data);
+        if(data.insertedId){
+          Swal.fire({
+            title: 'Success!',
+            text: 'Coffee added',
+            icon: 'Success',
+            confirmButtonText: 'Cool'
+          })
+        }
+      
+      });
+
   };
   return (
     <div className="bg-[#F4F3F0] p-24  ">
       <h2 className="text-3xl font-bold mb-4 text-center">Add COFFEE</h2>
-      <form onSubmit={handleSubmit} className="md:p-6 ">
+      <form onSubmit={handleSubmit} className="md:p-12 ">
         {/* form row  coffee name, Available Quantity */}
         <div className="md:flex gap-6  ">
           <label className="form-control md:w-full ">
@@ -31,12 +65,12 @@ export default function AddCoffee() {
           </label>
           <label className="form-control md:w-full  ">
             <div className="">
-              <span className="label-text font-bold">Available Quantity</span>
+              <span className="label-text font-bold"> Quantity</span>
             </div>
             <input
               name="quantity"
               type="text"
-              placeholder="Available Quantity"
+              placeholder=" Quantity"
               className="input input-bordered w-full "
             />
           </label>
