@@ -1,4 +1,4 @@
-import { data } from "react-router-dom";
+import { data, Link } from "react-router-dom";
 import Swal from 'sweetalert2'
 
 export default function AddCoffee() {
@@ -48,7 +48,8 @@ export default function AddCoffee() {
   };
   return (
     <div className="bg-[#F4F3F0] p-24  ">
-      <h2 className="text-3xl font-bold mb-4 text-center">Add COFFEE</h2>
+      <h2 className="text-3xl font-bold mb-4 text-center text-orange-900 ">Add COFFEE</h2>
+      <Link to='/'><p className=" underline text-xl text-center font-semibold text-orange-800">Home</p></Link>
       <form onSubmit={handleSubmit} className="md:p-12 ">
         {/* form row  coffee name, Available Quantity */}
         <div className="md:flex gap-6  ">

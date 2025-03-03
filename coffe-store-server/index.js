@@ -1,4 +1,4 @@
-const { MongoClient, ServerApiVersion } = require('mongodb');
+const { MongoClient, ServerApiVersion, ObjectId } = require('mongodb');
 require('dotenv').config()
 const express = require('express');
 const cors = require('cors');
@@ -30,19 +30,57 @@ async function run() {
         const coffeeCollection = client.db('coffeeDB').collection('coffee');
 
         // Data Read (R)
-        app.get('/coffee',async(req,res)=>{
+        app.get('/coffee', async (req, res) => {
             const cursor = coffeeCollection.find();
             const result = await cursor.toArray();
             res.send(result)
 
         })
-        //recieve data from clientSide (DATA Created (C))
-        app.post('/coffee', async(req, res) => {
-             const newCoffee =  req.body;
-             console.log(newCoffee);
-             const result = await coffeeCollection.insertOne(newCoffee);
-             res.send(result)
+        //Update data
+        app.get('/coffee/:id', async (req, res) => {
+            const id = req.params.id;
+            const query = { _id: new ObjectId(id) };
+            const result = await coffeeCollection.findOne(query);
+            res.send(result);
 
+        })
+        //update on UI
+        app.put('/coffee/:id', async(req, res) => {
+            const id = req.params.id;
+            const filter = { _id: new ObjectId(id) };
+            const options = { upsert: true };
+            const updatedCoffee = req.body;
+            const coffee = {
+                $set: {
+                    name: updatedCoffee.name,
+                    quantity: updatedCoffee.quantity,
+                    category: updatedCoffee.category,
+                    details: updatedCoffee.details,
+                    supplier: updatedCoffee.supplier,
+                    taste: updatedCoffee.taste,
+                    photoUrl: updatedCoffee.photoUrl,
+
+                }
+            }
+            const result = await coffeeCollection.updateOne(filter,coffee,options)
+            res.send(result);
+
+        })
+
+        //recieve data from clientSide (DATA Created (C))
+        app.post('/coffee', async (req, res) => {
+            const newCoffee = req.body;
+            console.log(newCoffee);
+            const result = await coffeeCollection.insertOne(newCoffee);
+            res.send(result)
+
+        })
+        //Delete data (D)
+        app.delete('/coffee/:id', async (req, res) => {
+            const id = req.params.id;
+            const query = { _id: new ObjectId(id) };
+            const result = await coffeeCollection.deleteOne(query);
+            res.send(result);
         })
 
 
